@@ -26,6 +26,13 @@ class AppTheme {
       typography: {
         fontFamily: "Roboto",
       },
+      overrides: {
+        MuiAppBar: {
+          colorPrimary: {
+            backgroundColor: this.background,
+          },
+        },
+      },
     });
   }
 }
