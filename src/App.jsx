@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { withRouter, Switch, Route } from "react-router-dom";
-import { Toolbar, Link, Typography } from "@material-ui/core";
+import { AppBar, Toolbar, Link, Typography } from "@material-ui/core";
 
 // style
 import { ThemeProvider } from "@material-ui/core/styles";
@@ -24,13 +24,15 @@ const App = () => {
       <ThemeProvider theme={theme.createTheme()}>
         <CssBaseline />
         {/* top bar */}
-        <Toolbar disableGutters className={globalClasses.topbar}>
-          <Typography variant="h6">
-            <Link href="#/home" underline="none">
-              Movie Home
-            </Link>
-          </Typography>
-        </Toolbar>
+        <AppBar position="fixed">
+          <Toolbar disableGutters className={globalClasses.topbar}>
+            <Typography variant="h6">
+              <Link href="#/home" underline="none">
+                Movie Home
+              </Link>
+            </Typography>
+          </Toolbar>
+        </AppBar>
 
         {/* content */}
         <div className={globalClasses.content}>
