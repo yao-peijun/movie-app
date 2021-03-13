@@ -11,13 +11,15 @@ const useGlobalStyle = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     display: "flex",
-    margin: theme.spacing(2, 4, 2, 4),
-    height: `calc(100% - ${theme.spacing(10)}px)`,
+    padding: theme.spacing(10, 4, 0, 4),
+    height: "100%",
+  },
+  fullHeight: {
+    height: "100%",
   },
   contentRoot: {
     flexGrow: 1,
     height: "100%",
-    overflow: "auto",
   },
   flexCenterDisplay: {
     flexGrow: 1,
