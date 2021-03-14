@@ -9,6 +9,9 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import AppTheme from "./style/AppTheme";
 import useGlobalStyles from "./style/GlobalStyles";
 
+// helpers
+import Config from "./config/config";
+
 // components
 import HomeMain from "./components/home/HomeMain";
 import Error from "./components/common/Error";
@@ -17,6 +20,9 @@ const App = () => {
   // styles
   const theme = new AppTheme();
   const globalClasses = useGlobalStyles();
+
+  // data
+  const config = Config();
 
   // render
   return (
@@ -38,7 +44,7 @@ const App = () => {
         <div className={globalClasses.content}>
           <Switch>
             <Route exact path="/" component={HomeMain} />
-            <Route path="/home" component={HomeMain} />
+            <Route path={config.path.home} component={HomeMain} />
             <Route component={Error} />
           </Switch>
         </div>
