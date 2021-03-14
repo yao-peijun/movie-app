@@ -6,11 +6,11 @@ import { AppBar, Toolbar, Link, Typography } from "@material-ui/core";
 // style
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import AppTheme from "./style/AppTheme";
 import useGlobalStyles from "./style/GlobalStyles";
 
 // helpers
 import Config from "./config/config";
+import { useStore } from "./context/Store";
 
 // components
 import HomeMain from "./components/home/HomeMain";
@@ -18,16 +18,16 @@ import Error from "./components/common/Error";
 
 const App = () => {
   // styles
-  const theme = new AppTheme();
   const globalClasses = useGlobalStyles();
 
   // data
   const config = Config();
+  const { state } = useStore();
 
   // render
   return (
     <div className={globalClasses.root}>
-      <ThemeProvider theme={theme.createTheme()}>
+      <ThemeProvider theme={state.appTheme.createTheme()}>
         <CssBaseline />
         {/* top bar */}
         <AppBar position="fixed">
