@@ -3,6 +3,7 @@ import { withRouter, Switch, Route, useRouteMatch } from "react-router-dom";
 
 // helpers
 import useGlobalStyles from "../../style/GlobalStyles";
+import Config from "../../config/config";
 
 // components
 import MoviewsDisplayMain from "../movies-display/MoviesDisplayMain";
@@ -15,6 +16,7 @@ const HomeMain = () => {
 
   // data
   const { path } = useRouteMatch();
+  const config = Config();
 
   // states
   const [selectedMovie, setSelectedMovie] = useState({});
@@ -34,7 +36,7 @@ const HomeMain = () => {
         </Route>
 
         {/* display movie details */}
-        <Route path={`${path}/:id`}>
+        <Route path={`${config.path.home}/:id`}>
           <MovieDetailsMain selectedMovie={selectedMovie} />
         </Route>
         <Route component={Error} />
