@@ -36,7 +36,7 @@ const HomeMain = () => {
         </Route>
 
         {/* display movie details */}
-        <Route path={`${config.path.home}/:id`}>
+        <Route exact path={`${config.path.home}/:id`}>
           <MovieDetailsMain selectedMovie={selectedMovie} />
         </Route>
         <Route component={Error} />
