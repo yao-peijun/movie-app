@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useRouteMatch } from "react-router-dom";
 import { Grid, Card, CardActionArea, CardMedia, Link } from "@material-ui/core";
 import axios from "axios";
 import PropTypes from "prop-types";
@@ -19,7 +18,6 @@ const MoviesDisplayMain = (props) => {
   // data
   const config = Config();
   const { handleViewMovieDetails } = props;
-  const { path } = useRouteMatch();
 
   // state
   const [movieData, setMovieData] = useState([]);
@@ -55,7 +53,7 @@ const MoviesDisplayMain = (props) => {
       <Grid item xs={12} sm={6} md={6} lg={4} xl={4} key={key}>
         <Card>
           <CardActionArea onClick={() => handleSelectedMovie(movie)}>
-            <Link href={`#${path}/${index + 1}`} underline="none">
+            <Link href={`#${config.path.home}/${index + 1}`} underline="none">
               <CardMedia
                 style={{ height: "220px", paddingTop: "2%" }}
                 image={img(`./${movie.image}`).default}
