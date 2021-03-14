@@ -35,6 +35,7 @@ const MovieDetailsMain = (props) => {
 
   // state
   const [selectedMovie, setSelectedMovie] = useState(parSelectedMovie);
+  const [trackParams, setTrackParams] = useState(params.id);
   const [loading, setLoading] = useState(
     Object.entries(selectedMovie).length === 0
   );
@@ -43,7 +44,13 @@ const MovieDetailsMain = (props) => {
 
   // get movie data
   useEffect(() => {
-    if (Object.entries(parSelectedMovie).length === 0) {
+    if (
+      Object.entries(parSelectedMovie).length === 0 ||
+      params.id !== trackParams
+    ) {
+      // update params
+      setTrackParams(params.id);
+
       // initialise loading and error states
       setLoading(true);
       setPageError(false);
@@ -71,7 +78,13 @@ const MovieDetailsMain = (props) => {
           setLoading(false);
         });
     }
-  }, [config.APIs.getMovieData, dispatch, parSelectedMovie, params.id]);
+  }, [
+    config.APIs.getMovieData,
+    dispatch,
+    parSelectedMovie,
+    params.id,
+    trackParams,
+  ]);
 
   // set background image
   useEffect(() => {
