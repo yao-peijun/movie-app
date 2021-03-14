@@ -33,7 +33,7 @@ const App = () => {
         <AppBar position="fixed">
           <Toolbar disableGutters className={globalClasses.topbar}>
             <Typography variant="h6">
-              <Link href="#/home" underline="none">
+              <Link href="/" underline="none">
                 Movie Home
               </Link>
             </Typography>
