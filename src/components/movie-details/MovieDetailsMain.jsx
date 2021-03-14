@@ -13,6 +13,7 @@ import { useStore } from "../../context/Store";
 // components
 import LoadingError from "../common/LoadingError";
 import Loading from "../common/Loading";
+import Error from "../common/Error";
 
 const localStyles = makeStyles((theme) => ({
   card: {
@@ -29,8 +30,8 @@ const MovieDetailsMain = (props) => {
   // data
   const { selectedMovie: parSelectedMovie } = props;
   const { params } = useRouteMatch();
-  const config = Config();
   const { dispatch } = useStore();
+  const config = Config();
 
   // state
   const [selectedMovie, setSelectedMovie] = useState(parSelectedMovie);
@@ -38,14 +39,31 @@ const MovieDetailsMain = (props) => {
     Object.entries(selectedMovie).length === 0
   );
   const [error, setError] = useState(false);
+  const [pageError, setPageError] = useState(false);
 
   // get movie data
   useEffect(() => {
-    if (Object.entries(selectedMovie).length === 0) {
+    if (Object.entries(parSelectedMovie).length === 0) {
+      // initialise loading and error states
+      setLoading(true);
+      setPageError(false);
+      setError(false);
+
+      // reset to default background
+      dispatch({
+        type: "SET_DEFAULT_BACKGROUND",
+      });
+
+      // get data
       axios
         .get(config.APIs.getMovieData)
         .then((res) => {
-          setSelectedMovie(res.data[params.id - 1]);
+          const tempMovie = res.data[params.id - 1];
+          if (tempMovie !== undefined) {
+            setSelectedMovie(tempMovie);
+          } else {
+            setPageError(true);
+          }
           setLoading(false);
         })
         .catch(() => {
@@ -53,34 +71,29 @@ const MovieDetailsMain = (props) => {
           setLoading(false);
         });
     }
-  });
+  }, [config.APIs.getMovieData, dispatch, parSelectedMovie, params.id]);
 
   // set background image
   useEffect(() => {
-    const setBackgroundImage = () => {
-      dispatch({
-        type: "SET_BACKGROUND_IMAGE",
-        payload: { image: selectedMovie.image },
-      });
-    };
-
-    const setDefaultBackground = () => {
-      dispatch({
-        type: "SET_DEFAULT_BACKGROUND",
-      });
-    };
-
     if (selectedMovie.image) {
       // change background image when enter the page
       window.addEventListener(
         "beforeunload",
-        setBackgroundImage(selectedMovie.image)
+        dispatch({
+          type: "SET_BACKGROUND_IMAGE",
+          payload: { image: selectedMovie.image },
+        })
       );
     }
 
     return () => {
       // set back to default background when exit page
-      window.removeEventListener("beforeunload", setDefaultBackground());
+      window.removeEventListener(
+        "beforeunload",
+        dispatch({
+          type: "SET_DEFAULT_BACKGROUND",
+        })
+      );
     };
   }, [dispatch, selectedMovie.image]);
 
@@ -88,6 +101,7 @@ const MovieDetailsMain = (props) => {
   let mainDisplay = <div />;
   if (loading) mainDisplay = <Loading />;
   else if (error) mainDisplay = <LoadingError />;
+  else if (pageError) mainDisplay = <Error />;
   else {
     // synopsis split <br /><br />
     const content = selectedMovie.synopsis
