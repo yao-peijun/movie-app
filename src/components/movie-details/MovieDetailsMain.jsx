@@ -8,6 +8,7 @@ import axios from "axios";
 // helpers
 import Config from "../../config/config";
 import GlobalStyles from "../../style/GlobalStyles";
+import { useStore } from "../../context/Store";
 
 // components
 import LoadingError from "../common/LoadingError";
@@ -16,6 +17,7 @@ import Loading from "../common/Loading";
 const localStyles = makeStyles((theme) => ({
   card: {
     backgroundColor: fade(theme.palette.background.default, 0.5),
+    padding: theme.spacing(1, 2, 0, 2),
   },
 }));
 
@@ -28,6 +30,7 @@ const MovieDetailsMain = (props) => {
   const { selectedMovie: parSelectedMovie } = props;
   const { params } = useRouteMatch();
   const config = Config();
+  const { dispatch } = useStore();
 
   // state
   const [selectedMovie, setSelectedMovie] = useState(parSelectedMovie);
@@ -52,6 +55,35 @@ const MovieDetailsMain = (props) => {
     }
   });
 
+  // set background image
+  useEffect(() => {
+    const setBackgroundImage = () => {
+      dispatch({
+        type: "SET_BACKGROUND_IMAGE",
+        payload: { image: selectedMovie.image },
+      });
+    };
+
+    const setDefaultBackground = () => {
+      dispatch({
+        type: "SET_DEFAULT_BACKGROUND",
+      });
+    };
+
+    if (selectedMovie.image) {
+      // change background image when enter the page
+      window.addEventListener(
+        "beforeunload",
+        setBackgroundImage(selectedMovie.image)
+      );
+    }
+
+    return () => {
+      // set back to default background when exit page
+      window.removeEventListener("beforeunload", setDefaultBackground());
+    };
+  }, [dispatch, selectedMovie.image]);
+
   // logic to display
   let mainDisplay = <div />;
   if (loading) mainDisplay = <Loading />;
@@ -75,9 +107,9 @@ const MovieDetailsMain = (props) => {
     mainDisplay = (
       <Grid
         item
-        xs={7}
-        sm={7}
-        md={6}
+        xs={12}
+        sm={10}
+        md={8}
         lg={5}
         xl={5}
         className={globalClasses.fullHeight}
