@@ -3,6 +3,9 @@ const Config = () => {
     APIs: {
       getMovieData: "https://sometimes-maybe-flaky-api.gdshive.io",
     },
+    path: {
+      home: "/home",
+    },
   };
 };
 
