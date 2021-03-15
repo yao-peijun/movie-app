@@ -4,7 +4,7 @@
 
 1. bash at the root folder
 2. command: "npm install" to install the packages in package.json
-3. (optional) command: "npm run lint-fix" to fix all "CLRF" to "LF"
+3. command: "npm run lint-fix" to fix all "CLRF" to "LF"
 4. command: "npm start" to start the application
 5. application is accessible at http://localhost:3000/#/
 
