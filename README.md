@@ -16,12 +16,10 @@
 
 2. The movies could be filter by (1) genre and (2) production year
 
-- Filter by "Comedy", movies with genre: Comedy would display
-  (Comedy) Duplex and Alice in the Wonderland
+- Filter by "Comedy", movies: (Comedy) Duplex and Alice in the Wonderland
   ![Filter by Comedy](src/asset/image/ui-display/filter_1.JPG)
 
-- Filter by "Comedy" and "2006", movies with genre - Comedy or production year - 2006 would display
-  (Comedy) Duplex and Alice in the Wonderland, and (2006) Barnyard
+- Filter by "Comedy" and "2006", movies: (Comedy) Duplex and Alice in the Wonderland or (2006) Barnyard would display
   ![Filter by Comedy and 2006](src/asset/image/ui-display/filter_2.JPG)
 
 ## Movie Details Features
